@@ -21,9 +21,11 @@ module LinkedIn
     private
 
       def format_options_for_query(opts)
-        opts.inject({}) do |list, kv|
-          key, value = kv.first.to_s.gsub("_","-"), kv.last
-          list[key]  = sanitize_value(value)
+        opts.inject([]) do |list, (k, values)|
+          key = k.to_s.gsub("_","-")
+          values.to_a.each do |value|
+            list << [key, sanitize_value(value)]
+          end
           list
         end
       end
